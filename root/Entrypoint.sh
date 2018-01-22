@@ -8,7 +8,7 @@ mkdir -p /torrents/config/deluge
 mkdir -p /torrents/config/deluge/plugins
 mkdir -p /torrents/config/log
 mkdir -p /torrents/config/torrents
-mkdir -p /torrents/config/watch
+mkdir -p /torrents/watch
 
 mv /configs/* /torrents/config/deluge/
 rm -fr /configs
