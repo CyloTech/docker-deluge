@@ -4,6 +4,9 @@ UMASK_SET=${UMASK_SET:-022}
 
 umask "$UMASK_SET"
 
+s6-setuidgid abc /usr/bin/deluged -c /torrents/config/deluge/ -d --loglevel=info -l /torrents/config/log/deluged.log &
+echo $(date) && sleep 10 && echo $(date) && kill -9 $(pgrep -f '/usr/bin/deluged')
+
 exec \
 	s6-setuidgid abc /usr/bin/deluged -c /torrents/config/deluge/ \
 	-d --loglevel=info -l /torrents/config/log/deluged.log

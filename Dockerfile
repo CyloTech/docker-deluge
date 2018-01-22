@@ -26,6 +26,7 @@ RUN \
 	openssl \
 	p7zip \
 	unrar \
+	libcap \
 	unzip && \
  apk add --no-cache \
 	--repository http://nl.alpinelinux.org/alpine/edge/testing \
@@ -58,9 +59,9 @@ RUN mkdir /configs
 COPY configs /configs
 RUN chmod +x /Entrypoint.sh
 
+RUN setcap cap_net_bind_service=+ep /usr/bin/python2.7
+
 # ports
-EXPOSE 8112 58846 58946 58946/udp
+EXPOSE 80 58846 58946 58946/udp
 
 ENTRYPOINT /Entrypoint.sh
-
-CMD ["/init"]

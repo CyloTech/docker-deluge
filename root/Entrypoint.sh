@@ -13,9 +13,11 @@ mkdir -p /torrents/config/watch
 mv /configs/* /torrents/config/deluge/
 rm -fr /configs
 
-chown -R abc:abc /torrents
+chown -R 1000:1000 /torrents
 
 chmod +x /deluge-pass.py
 /deluge-pass.py /torrents/config/deluge ${DELUGE_PASSWORD}
+
+cat /torrents/config/deluge/auth | grep "${DELUGE_USERNAME}" || echo "${DELUGE_USERNAME}:${DELUGE_PASSWORD}:10" >> /torrents/config/deluge/auth
 
 exec "/init"
