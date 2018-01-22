@@ -5,5 +5,5 @@ UMASK_SET=${UMASK_SET:-022}
 umask "$UMASK_SET"
 
 exec \
-	s6-setuidgid abc /usr/bin/deluged -c /config \
-	-d --loglevel=info -l /config/deluged.log
+	s6-setuidgid abc /usr/bin/deluged -c /torrents/config/deluge/ \
+	-d --loglevel=info -l /torrents/config/log/deluged.log

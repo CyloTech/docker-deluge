@@ -3,8 +3,8 @@ FROM lsiobase/alpine:3.7
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
+LABEL build_version="Cylo.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="cylo"
 
 # environment variables
 ENV PYTHON_EGG_CACHE="/config/plugins/.python-eggs"
@@ -46,12 +46,21 @@ RUN \
  echo "**** cleanup ****" && \
  apk del --purge \
 	build-dependencies && \
- rm -rf \
-	/root/.cache
+ rm -rf /root/.cache && \
+ wget -q http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz && \
+ gunzip GeoIP.dat.gz && \
+ mkdir -p /usr/share/GeoIP && \
+ mv GeoIP.dat /usr/share/GeoIP/GeoIP.dat
 
 # add local files
 COPY root/ /
+RUN mkdir /configs
+COPY configs /configs
+RUN chmod +x /Entrypoint.sh
 
-# ports and volumes
+# ports
 EXPOSE 8112 58846 58946 58946/udp
-VOLUME /config /downloads
+
+ENTRYPOINT /Entrypoint.sh
+
+CMD ["/init"]
